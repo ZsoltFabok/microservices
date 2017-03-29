@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
     }
 }
 
@@ -29,17 +30,27 @@ repositories {
 // configuration for the devtools
 configurations {
     dev
+    springLoaded
 }
 // Use Spring Boot DevTool only when we run Gradle bootRun task
 bootRun {
     classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
 
+// Intellij and gradle use the same output dir
+apply plugin: 'idea'
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
+//    compile("org.springframework.boot:spring-boot-starter-web") {
+//        exclude module: "spring-boot-starter-tomcat"
+//    }
     compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
 }
