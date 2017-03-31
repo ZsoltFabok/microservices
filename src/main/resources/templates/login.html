@@ -7,6 +7,7 @@
         <!-- link rel="stylesheet" href="index.css" / -->
     </head>
     <body>
+        <p th:text="${quote}">Test</p>
         <div tiles:fragment="content">
             <form name="login-form" th:action="@{/login}" method="post">
                 <fieldset>
