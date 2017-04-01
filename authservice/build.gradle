@@ -1,0 +1,4 @@
+jar {
+    baseName = 'microservices-authservice'
+    version =  '0.1.0-SNAPSHOT'
+}
