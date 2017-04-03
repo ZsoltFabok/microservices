@@ -3,6 +3,9 @@ package com.zsoltfabok.web;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,10 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/login")
 @Controller
 public class LoginController {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
     @RequestMapping(method=RequestMethod.GET)
     public String login() {
         return "login";
@@ -26,9 +33,8 @@ public class LoginController {
         payload.put("username", username);
         payload.put("password", password);
 
-        RestTemplate template = new RestTemplate();
         // FIXME this url should come from configuration
-        JsonNode json = template.postForObject("http://localhost:8081/login", payload, ObjectNode.class);
+        JsonNode json = restTemplate.postForObject("http://localhost:8081/login", payload, ObjectNode.class);
 
         if (!"ok".equals(json.get("status").asText())) {
             model.addAttribute("error", true);
@@ -36,5 +42,10 @@ public class LoginController {
         }
 
         return "redirect:/";
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 }

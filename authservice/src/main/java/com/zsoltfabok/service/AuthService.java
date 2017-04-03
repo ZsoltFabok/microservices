@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class AuthService {
-    @RequestMapping(value="/login", method= RequestMethod.POST)
+    @RequestMapping(value="/login", method=RequestMethod.POST)
     public @ResponseBody JsonNode login(@RequestBody JsonNode payload) {
         String username = payload.get("username").asText();
         String password = payload.get("password").asText();
@@ -27,6 +27,7 @@ public class AuthService {
         if (username.equals(password)) {
             response.put("status", "ok");
         } else {
+            // FIXME in this case return with a different error code not 200
             response.put("status", "failed");
         }
         return response;
