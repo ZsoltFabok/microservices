@@ -3,6 +3,7 @@ package com.zsoltfabok.web;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zsoltfabok.config.ServicesProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/login")
 @Controller
 public class LoginController {
+
+    @Autowired
+    private ServicesProperties servicesProperties;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -33,8 +37,8 @@ public class LoginController {
         payload.put("username", username);
         payload.put("password", password);
 
-        // FIXME this url should come from configuration
-        JsonNode json = restTemplate.postForObject("http://localhost:8081/login", payload, ObjectNode.class);
+        String authserviceUrl = servicesProperties.getAuthservice().getUrl();
+        JsonNode json = restTemplate.postForObject(authserviceUrl, payload, ObjectNode.class);
 
         if (!"ok".equals(json.get("status").asText())) {
             model.addAttribute("error", true);

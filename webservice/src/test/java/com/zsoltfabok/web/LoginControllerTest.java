@@ -3,9 +3,11 @@ package com.zsoltfabok.web;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zsoltfabok.config.ServicesProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,8 +33,12 @@ public class LoginControllerTest {
     @MockBean
     private RestTemplate restTemplate;
 
+    @MockBean(answer=Answers.RETURNS_DEEP_STUBS)
+    private ServicesProperties servicesProperties;
+
     private JsonNodeFactory nodeFactory;
     private ObjectNode formParam;
+    private String authserviceUrl;
 
     @Before
     public void setup() {
@@ -41,6 +47,9 @@ public class LoginControllerTest {
         formParam = nodeFactory.objectNode();
         formParam.put("username", "zsolt");
         formParam.put("password", "zsolt");
+
+        authserviceUrl = "url";
+        when(servicesProperties.getAuthservice().getUrl()).thenReturn(authserviceUrl);
     }
 
     @Test
@@ -55,7 +64,7 @@ public class LoginControllerTest {
 
         ObjectNode response = nodeFactory.objectNode();
         response.put("status", "ok");
-        when(restTemplate.postForObject("http://localhost:8081/login", formParam, ObjectNode.class)).thenReturn(response);
+        when(restTemplate.postForObject(authserviceUrl, formParam, ObjectNode.class)).thenReturn(response);
 
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -70,7 +79,7 @@ public class LoginControllerTest {
 
         ObjectNode response = nodeFactory.objectNode();
         response.put("status", "failed");
-        when(restTemplate.postForObject("http://localhost:8081/login", formParam, ObjectNode.class)).thenReturn(response);
+        when(restTemplate.postForObject(authserviceUrl, formParam, ObjectNode.class)).thenReturn(response);
 
         mvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
