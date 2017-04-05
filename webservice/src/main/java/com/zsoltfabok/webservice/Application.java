@@ -1,6 +1,6 @@
-package com.zsoltfabok;
+package com.zsoltfabok.webservice;
 
-import com.zsoltfabok.config.ServicesProperties;
+import com.zsoltfabok.webservice.config.ServicesProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

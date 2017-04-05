@@ -1,9 +1,9 @@
-package com.zsoltfabok.web;
+package com.zsoltfabok.webservice.web;
 
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zsoltfabok.config.ServicesProperties;
+import com.zsoltfabok.webservice.config.ServicesProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

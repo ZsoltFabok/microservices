@@ -1,4 +1,4 @@
-package com.zsoltfabok.config;
+package com.zsoltfabok.webservice.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

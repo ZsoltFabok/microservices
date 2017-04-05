@@ -1,4 +1,4 @@
-package com.zsoltfabok.service;
+package com.zsoltfabok.authservice.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;

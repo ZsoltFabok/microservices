@@ -1,4 +1,4 @@
-package com.zsoltfabok.web;
+package com.zsoltfabok.webservice.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

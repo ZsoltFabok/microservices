@@ -1,6 +1,6 @@
-package com.zsoltfabok;
+package com.zsoltfabok.authservice.rest;
 
-import com.zsoltfabok.service.AuthService;
+import com.zsoltfabok.authservice.rest.AuthService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

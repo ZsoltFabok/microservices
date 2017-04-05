@@ -1,9 +1,9 @@
-package com.zsoltfabok.web;
+package com.zsoltfabok.webservice.web;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zsoltfabok.config.ServicesProperties;
+import com.zsoltfabok.webservice.config.ServicesProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
