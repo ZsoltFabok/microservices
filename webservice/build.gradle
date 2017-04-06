@@ -2,3 +2,8 @@ jar {
     baseName = 'microservices-webservice'
     version =  '0.1.0-SNAPSHOT'
 }
+
+dependencies {
+    compile("org.webjars:bootstrap:3.3.4")
+    compile("org.webjars:jquery:2.1.4")
+}

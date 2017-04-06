@@ -56,7 +56,7 @@ public class LoginControllerTest {
     public void showsTheLoginPage() throws Exception {
         mvc.perform(get("/login"))
             .andExpect(status().isOk())
-            .andExpect(xpath("/html/body/div/form[@name='login-form']").exists());
+            .andExpect(xpath("/html/body//div[@class='panel-body']//form[@id='login-form']").exists());
     }
 
     @Test
@@ -86,8 +86,8 @@ public class LoginControllerTest {
                 .param("username", "zsolt")
                 .param("password", "zsolt"))
                     .andExpect(status().isOk())
-                    .andExpect(xpath("/html/body/div/form/fieldset/div[@class='alert alert-error']/text()")
+                    .andExpect(xpath("/html/body//div[@class='panel-body']//form[@id='login-form']/div[@class='alert alert-error']/text()")
                             .string(containsString("Invalid username and password")))
-                    .andExpect(xpath("/html/body/div/form[@name='login-form']").exists());
+                    .andExpect(xpath("/html/body//div[@class='panel-body']//form[@id='login-form']").exists());
     }
 }

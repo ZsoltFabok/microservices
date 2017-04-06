@@ -44,6 +44,7 @@ subprojects {
 
     dependencies {
         compile("org.springframework.boot:spring-boot-starter-jetty")
+        // TODO: without this line the authservice does not compile. Why?
         compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile("org.springframework.boot:spring-boot-devtools")
         testCompile("org.springframework.boot:spring-boot-starter-test")
