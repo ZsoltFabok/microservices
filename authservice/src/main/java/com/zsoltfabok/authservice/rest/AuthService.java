@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * sending data to the service with curl:
  *
- * curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:8081/login
+ * curl -H "Content-Type: application/json" -X POST -d '{"email":"xyz","password":"xyz"}' http://localhost:8081/login
  */
 @Controller
 public class AuthService {
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public @ResponseBody JsonNode login(@RequestBody JsonNode payload) {
-        String username = payload.get("username").asText();
+        String email = payload.get("email").asText();
         String password = payload.get("password").asText();
 
         final JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         ObjectNode response = nodeFactory.objectNode();
 
-        if (username.equals(password)) {
+        if (email.equals(password)) {
             response.put("status", "ok");
         } else {
             // FIXME in this case return with a different error code not 200

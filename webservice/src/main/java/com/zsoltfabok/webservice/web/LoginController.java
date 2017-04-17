@@ -30,11 +30,11 @@ public class LoginController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public String loginSuccess(Model model, @RequestParam String username, @RequestParam String password) {
+    public String loginSuccess(Model model, @RequestParam String email, @RequestParam String password) {
 
         final JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         ObjectNode payload = nodeFactory.objectNode();
-        payload.put("username", username);
+        payload.put("email", email);
         payload.put("password", password);
 
         String authserviceUrl = servicesProperties.getAuthservice().getUrl();
