@@ -45,7 +45,7 @@ public class LoginControllerTest {
         nodeFactory = JsonNodeFactory.instance;
 
         formParam = nodeFactory.objectNode();
-        formParam.put("username", "zsolt");
+        formParam.put("email", "zsolt");
         formParam.put("password", "zsolt");
 
         authserviceUrl = "url";
@@ -68,7 +68,7 @@ public class LoginControllerTest {
 
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .param("username", "zsolt")
+            .param("email", "zsolt")
             .param("password", "zsolt"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
@@ -83,7 +83,7 @@ public class LoginControllerTest {
 
         mvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("username", "zsolt")
+                .param("email", "zsolt")
                 .param("password", "zsolt"))
                     .andExpect(status().isOk())
                     .andExpect(xpath("/html/body//div[@class='panel-body']//form[@id='login-form']/div[@class='alert alert-error']/text()")

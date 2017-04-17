@@ -21,8 +21,8 @@ public class AuthServiceTest {
     private MockMvc mvc;
 
     @Test
-    public void returnsOkWhenTheUserNameEqualsThePassword() throws Exception {
-        String request = "{\"username\":\"zsolt\", \"password\":\"zsolt\"}";
+    public void returnsOkWhenTheEmailEqualsThePassword() throws Exception {
+        String request = "{\"email\":\"zsolt\", \"password\":\"zsolt\"}";
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(request))
@@ -31,8 +31,8 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void returnsFailedWhenTheUserNameDoesNotMatchThePassword() throws Exception {
-        String request = "{\"username\":\"zsolt\", \"password\":\"zs\"}";
+    public void returnsFailedWhenTheEmailDoesNotMatchThePassword() throws Exception {
+        String request = "{\"email\":\"zsolt\", \"password\":\"zs\"}";
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(request))
