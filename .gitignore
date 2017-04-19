@@ -3,3 +3,6 @@ build
 .gradle
 .idea/
 
+# ignore sqlite databases
+*.db
+

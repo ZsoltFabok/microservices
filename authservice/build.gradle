@@ -2,3 +2,13 @@ jar {
     baseName = 'microservices-authservice'
     version =  '0.1.0-SNAPSHOT'
 }
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        // exclude group: "org.apache.tomcat"
+    }
+
+    compile("org.liquibase:liquibase-core")
+    compile("org.xerial:sqlite-jdbc:3.16.1")
+    runtime("com.zsoltfabok:sqlite-dialect:1.0")
+}
