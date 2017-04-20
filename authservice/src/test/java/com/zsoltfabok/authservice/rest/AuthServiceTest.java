@@ -52,7 +52,7 @@ public class AuthServiceTest {
         mvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
-                .andExpect(status().isOk())
+                .andExpect(status().isForbidden())
                 .andExpect(jsonPath("status", is("failed")));
     }
 
@@ -63,7 +63,32 @@ public class AuthServiceTest {
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .content(request))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("status", is("failed")));
+    }
+
+    @Test
+    public void returnsOkWhenTheUserWasSuccefullyCreated() throws Exception {
+        User newUser = new User("email", "zsolt");
+        when(repository.create("email", "zsolt")).thenReturn(newUser);
+
+        String request = "{\"email\":\"email\", \"password\":\"zsolt\"}";
+        mvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("status", is("ok")));
+    }
+
+    @Test
+    public void returnsFailedWhenTheUserAlreadyExists() throws Exception {
+        when(repository.create("email", "zsolt")).thenReturn(null);
+
+        String request = "{\"email\":\"email\", \"password\":\"zsolt\"}";
+        mvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .andExpect(status().isConflict())
                 .andExpect(jsonPath("status", is("failed")));
     }
 }

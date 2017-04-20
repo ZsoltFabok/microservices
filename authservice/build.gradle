@@ -10,5 +10,6 @@ dependencies {
 
     compile("org.liquibase:liquibase-core")
     compile("org.xerial:sqlite-jdbc:3.16.1")
+    testCompile("com.h2database:h2")
     runtime("com.zsoltfabok:sqlite-dialect:1.0")
 }
