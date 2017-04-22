@@ -11,9 +11,11 @@ import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -79,7 +81,8 @@ public class LoginControllerTest {
 
         ObjectNode response = nodeFactory.objectNode();
         response.put("status", "failed");
-        when(restTemplate.postForObject(authserviceUrl, formParam, ObjectNode.class)).thenReturn(response);
+        when(restTemplate.postForObject(authserviceUrl + "/login", formParam, ObjectNode.class))
+                .thenThrow(new HttpClientErrorException(HttpStatus.FORBIDDEN, response.toString()));
 
         mvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
