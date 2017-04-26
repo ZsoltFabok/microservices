@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
@@ -29,7 +31,7 @@ public class LoginController {
     }
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
-    public String login(Model model, @RequestParam String email, @RequestParam String password) {
+    public String login(HttpSession session, Model model, @RequestParam String email, @RequestParam String password) {
 
         final JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         ObjectNode payload = nodeFactory.objectNode();
@@ -39,6 +41,7 @@ public class LoginController {
         try {
             String authserviceUrl = servicesProperties.getAuthservice().getUrl() + "/login";
             restTemplate.postForObject(authserviceUrl, payload, ObjectNode.class);
+            session.setAttribute("id", email);
             return "redirect:/";
         } catch (HttpClientErrorException e) {
             model.addAttribute("error", e.getResponseBodyAsString());
