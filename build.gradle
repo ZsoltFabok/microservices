@@ -50,3 +50,35 @@ subprojects {
         testCompile("org.springframework.boot:spring-boot-starter-test")
     }
 }
+
+
+// for codecov
+
+// needs to be on the all level to make the top level
+// codeCoverageReport task to work
+allprojects {
+    apply plugin: 'jacoco'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
