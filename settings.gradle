@@ -1,1 +1,1 @@
-include 'authservice', 'webservice'
+include 'authservice', 'webservice', 'api-gateway'
