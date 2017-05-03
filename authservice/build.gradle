@@ -8,6 +8,11 @@ dependencies {
         // exclude group: "org.apache.tomcat"
     }
 
+    // css
+    compile("org.webjars:bootstrap:3.3.4")
+    compile("org.webjars:jquery:2.1.4")
+
+    // database
     compile("org.liquibase:liquibase-core")
     compile("org.xerial:sqlite-jdbc:3.16.1")
     testCompile("com.h2database:h2")
