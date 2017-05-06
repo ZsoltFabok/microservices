@@ -5,4 +5,8 @@ jar {
 
 dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-zuul:1.3.0.RELEASE")
+
+    // css, js
+    compile("org.webjars:bootstrap:3.3.4")
+    compile("org.webjars:jquery:2.1.4")
 }

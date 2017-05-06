@@ -1,22 +1,15 @@
-package com.zsoltfabok.webservice.web;
+package com.zsoltfabok.authservice.web;
 
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zsoltfabok.webservice.config.ServicesProperties;
-import org.junit.Before;
+import com.zsoltfabok.authservice.service.AuthService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
@@ -33,26 +26,7 @@ public class LoginControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private RestTemplate restTemplate;
-
-    @MockBean(answer=Answers.RETURNS_DEEP_STUBS)
-    private ServicesProperties servicesProperties;
-
-    private JsonNodeFactory nodeFactory;
-    private ObjectNode formParam;
-    private String authserviceUrl;
-
-    @Before
-    public void setup() {
-        nodeFactory = JsonNodeFactory.instance;
-
-        formParam = nodeFactory.objectNode();
-        formParam.put("email", "zsolt");
-        formParam.put("password", "zsolt");
-
-        authserviceUrl = "url";
-        when(servicesProperties.getAuthservice().getUrl()).thenReturn(authserviceUrl);
-    }
+    private AuthService authService;
 
     @Test
     public void showsTheLoginPage() throws Exception {
@@ -62,32 +36,25 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void loginSuccessWhenUserNameEqualsPassword() throws Exception {
-
-        ObjectNode response = nodeFactory.objectNode();
-        response.put("status", "ok");
-        when(restTemplate.postForObject(authserviceUrl, formParam, ObjectNode.class)).thenReturn(response);
+    public void loginSuccessWhenUserNameAndPasswordMatches() throws Exception {
+        when(authService.login("email", "password")).thenReturn(true);
 
         mvc.perform(post("/login")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .param("email", "zsolt")
-            .param("password", "zsolt"))
+            .param("email", "email")
+            .param("password", "password"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
 
     @Test
-    public void loginFailsWhenUserNameDoesNotEqualToPasswordAndGoesBackToLoginPage() throws Exception {
-
-        ObjectNode response = nodeFactory.objectNode();
-        response.put("status", "failed");
-        when(restTemplate.postForObject(authserviceUrl + "/login", formParam, ObjectNode.class))
-                .thenThrow(new HttpClientErrorException(HttpStatus.FORBIDDEN, response.toString()));
+    public void loginFailsWithWrongPasswordAndGoesBackToLoginPage() throws Exception {
+        when(authService.login("email", "password")).thenReturn(false);
 
         mvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("email", "zsolt")
-                .param("password", "zsolt"))
+                .param("email", "email")
+                .param("password", "password"))
                     .andExpect(status().isOk())
                     .andExpect(xpath("/html/body//div[@class='panel-body']//form[@id='login-form']/div[@class='alert alert-error']/text()")
                             .string(containsString("Invalid username and password")))

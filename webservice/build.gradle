@@ -4,10 +4,10 @@ jar {
 }
 
 dependencies {
-    compile("org.webjars:bootstrap:3.3.4")
-    compile("org.webjars:jquery:2.1.4")
+    // compile("org.webjars:bootstrap:3.3.4")
+    // compile("org.webjars:jquery:2.1.4")
     // session
-    compile("org.springframework.session:spring-session-jdbc")
-    compile("org.springframework.boot:spring-boot-starter-jdbc")
-    compile("org.xerial:sqlite-jdbc:3.16.1")
+    // compile("org.springframework.session:spring-session-jdbc")
+    // compile("org.springframework.boot:spring-boot-starter-jdbc")
+    // compile("org.xerial:sqlite-jdbc:3.16.1")
 }

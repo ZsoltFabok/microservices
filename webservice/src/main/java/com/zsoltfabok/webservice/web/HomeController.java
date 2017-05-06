@@ -11,7 +11,7 @@ public class HomeController {
     @RequestMapping("/")
     public String index(HttpSession session) {
         if (session.getAttribute("id") == null) {
-            return "login";
+            return "redirect:/login";
         }
         return "index";
     }

@@ -1,0 +1,5 @@
+coverage:
+  ignore:
+    - webservice/src/main/java/com/zsoltfabok/webservice/WebService.java
+    - authservice/src/main/java/com/zsoltfabok/authservice/AuthService.java
+    - api-gateway/src/main/java/com/zsoltfabok/apigateway/ApiGateway.java
