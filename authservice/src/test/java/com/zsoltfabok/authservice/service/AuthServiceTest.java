@@ -43,6 +43,14 @@ public class AuthServiceTest {
     }
 
     @Test
+    public void returnsFailedWhenTheUserDoesNotExist() throws Exception {
+        when(repository.findByEmail("email")).thenReturn(null);
+        when(user.getPassword()).thenReturn("password");
+
+        assertFalse(authService.login("email", "password"));
+    }
+
+    @Test
     public void returnsOkWhenTheUserWasSuccessfullyCreated() throws Exception {
         User newUser = new User("email", "password");
         when(repository.create("email", "password")).thenReturn(newUser);
